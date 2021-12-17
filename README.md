@@ -15,6 +15,14 @@ Our company had a need to assess the security of some internal systems, not want
 
 # Usage
 
+## Preparations
+For using the DNSLog-server, you will need to set up the following DNS records:
+
+| Record name | Record type | Record value | Description |
+|---|---|---|---|
+| dnslog-ns.example.com | A | 1.2.3.4 | IP of the DNSLog-server, since most DNS won't let you set an IP address as a name server |
+| dnslog.example.com | NS | dnslog-ns.example.com | Define the DNSLog-server as a name server for *.dnslog.example.com | 
+
 ## CLI
 ```python
 $ python3 py-dnslogserver.py
