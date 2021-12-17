@@ -19,12 +19,12 @@ jobs:
 
     - name: docker build
       run: |
-        docker build --file Dockerfile -t scheibling/py-dnslogserver:1.0-alpine . && |
-        docker tag scheibling/py-dnslogserver:1.0-alpine scheibling/py-dnslogserver:latest && |
+        docker build --file Dockerfile -t scheibling/py-dnslogserver:1.0-alpine . && \
+        docker tag scheibling/py-dnslogserver:1.0-alpine scheibling/py-dnslogserver:latest && \
         docker tag scheibling/py-dnslogserver:1.0-alpine scheibling/py-dnslogserver:latest-alpine
 
     - name: docker push
       run: |
-        docker push scheibling/py-dnslogserver:latest && |
-        docker push scheibling/py-dnslogserver:latest-alpine && |
+        docker push scheibling/py-dnslogserver:latest && \
+        docker push scheibling/py-dnslogserver:latest-alpine && \
         docker push scheibling/py-dnslogserver:1.0-alpine
