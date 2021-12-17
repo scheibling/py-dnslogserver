@@ -24,7 +24,5 @@ jobs:
         docker build --file Dockerfile -t $DOCKER_REPO:latest .
 
     - name: docker push
-      env:
-        DOCKER_REPO: ${{ env.GITHUB_REPOSITORY }}
       run: |
-        docker push ${DOCKER_REPO}:latest
+        docker push ${{ env.GITHUB_REPOSITORY }}:latest
