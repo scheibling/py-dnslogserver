@@ -18,10 +18,8 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: docker build
-      env:
-        DOCKER_REPO: ${{ env.GITHUB_REPOSITORY }}
       run: |
-        docker build --file Dockerfile -t $DOCKER_REPO:latest .
+        docker build --file Dockerfile -t ${{ env.GITHUB_REPOSITORY }}:latest .
 
     - name: docker push
       run: |
