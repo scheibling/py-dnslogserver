@@ -15,4 +15,4 @@ EXPOSE 53/tcp
 EXPOSE 53/udp
 EXPOSE 80/tcp
 
-ENTRYPOINT ["/bin/sh", "-c", "python /app/py-dnslogserver.py --dnslog-domain ${DNSLOG_DOMAIN} --dnslog-ip ${DNSLOG_IP} --logging-folder /logging", "--"]
+ENTRYPOINT ["/bin/sh", "-c", "python -u /app/py-dnslogserver.py --dnslog-domain ${DNSLOG_DOMAIN} --dnslog-ip ${DNSLOG_IP} --logging-folder /logging", "--"]

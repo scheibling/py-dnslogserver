@@ -46,27 +46,32 @@ options:
 ### Get the prebuilt image
 ```shell
 # Run the image with logs to cli
-docker run -it --rm --name py-dnslogserver -v ./logging:/logging -p 53:53/udp -p 53:53/tcp -p 80:80/tcp -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" scheibling/py-dnslogserver:latest
+docker run -it --rm --name py-dnslogserver -v ./logging:/logging --network host -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" -e PYTHONUNBUFFERED=1 scheibling/py-dnslogserver:latest
 
 # Run the image as a daemon
-docker run -it --rm --name py-dnslogserver -v ./logging:/logging -p 53:53/udp -p 53:53/tcp -p 80:80/tcp -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" scheibling/py-dnslogserver:latest
-
+docker run -it --rm --name py-dnslogserver -v ./logging:/logging --network host -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" -e PYTHONUNBUFFERED=1 scheibling/py-dnslogserver:latest
+```
 # Run the image with docker-compose
 ```yaml
-version: "3.2"
+version: "2.2"
 services:
   dnslogserver:
     container_name: dnslogserver
     image: scheibling/py-dnslogserver:latest
+    network_mode: host
     volumes:
-        - ./logging:/logging
-    ports:
-        - 53:53/udp
-        - 53:53/tcp
-        - 80:80/tcp
+        - ./logging:/logging:rw
     environment:
-        DNSLOG_DOMAIN: dnslog.domain.com
-        DNSLOG_IP: "1.2.3.4"
+      - DNSLOG_DOMAIN=dnslog.domain.com
+      - DNSLOG_IP=1.2.3.4
+      - PYTHONUNBUFFERED=1
+```
+```shell
+# Logging to stdout
+sudo docker-compose up
+
+# Logging to docker logs
+sudo docker-compose up -d
 ```
 
 ```shell
@@ -76,27 +81,25 @@ cd py-dnslogserver
 sudo docker build -t py-dnslogserver .
 
 # Run the image with logs to cli
-docker run -it --rm --name py-dnslogserver -v ./logging:/logging -p 53:53/udp -p 53:53/tcp -p 80:80/tcp -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" scheibling/py-dnslogserver
+docker run -it --rm --name py-dnslogserver -v ./logging:/logging --network host -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" -e PYTHONUNBUFFERED=1 py-dnslogserver
 
 # Run the image as a daemon
-docker run -it --rm --name py-dnslogserver -v ./logging:/logging -p 53:53/udp -p 53:53/tcp -p 80:80/tcp -e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" scheibling/py-dnslogserver
+docker run -it --rm --name py-dnslogserver -v ./logging:/logging --network host-e DNSLOG_DOMAIN=dnslog.domain.com -e DNSLOG_IP="1.2.3.4" -e PYTHONUNBUFFERED=1 py-dnslogserver
 
 # Run the image with docker-compose
 ```yaml
-version: "3.2"
+version: "2.2"
 services:
   dnslogserver:
     container_name: dnslogserver
-    image: scheibling/py-dnslogserver:latest
+    image: py-dnslogserver
+    network_mode: host
     volumes:
-        - ./logging:/logging
-    ports:
-        - 53:53/udp
-        - 53:53/tcp
-        - 80:80/tcp
+        - ./logging:/logging:rw
     environment:
-        DNSLOG_DOMAIN: dnslog.domain.com
-        DNSLOG_IP: "1.2.3.4"
+      - DNSLOG_DOMAIN=dnslog.domain.com
+      - DNSLOG_IP=1.2.3.4
+      - PYTHONUNBUFFERED=1
 ```
 
 
